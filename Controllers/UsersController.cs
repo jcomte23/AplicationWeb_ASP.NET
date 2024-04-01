@@ -1,15 +1,24 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApplicationCRUD_USERS.Data;
 
 namespace WebApplicationCRUD_USERS.Controllers
 {
     public class UsersController : Controller
     {
-        // GET: UsersController
-        public ActionResult Index()
+        public readonly DbCleverContext _context;
+        public UsersController(DbCleverContext context)
         {
-            return View();
+            _context = context;
         }
+
+        // GET: UsersController
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Users.ToListAsync());
+        }
+
 
         // GET: UsersController/Details/5
         public ActionResult Details(int id)
