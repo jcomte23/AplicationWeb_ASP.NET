@@ -22,7 +22,7 @@ namespace WebApplicationCRUD_USERS.Controllers
         // GET: ProductsController/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            return View(await _context.Users.FirstOrDefaultAsync(product => product.Id == id));
+            return View(await _context.Products.FirstOrDefaultAsync(product => product.Id == id));
         }
 
         // GET: ProductsController/Create
@@ -68,18 +68,40 @@ namespace WebApplicationCRUD_USERS.Controllers
         }
 
         // GET: ProductsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
+            if (id == null || _context.Products == null)
+            {
+                return NotFound();
+            }
+
+            var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            //return View(usuario);
             return View();
         }
+
+
+
 
         // POST: ProductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
+                var product = await _context.Products.FindAsync(id);
+                if (product != null)
+                {
+                    _context.Products.Remove(product);
+                }
+
+                await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
