@@ -36,12 +36,10 @@ namespace WebApplicationCRUD_USERS.Controllers
         // POST: ProductsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> Create([Bind("Name,Description,Price,Amount,ExpirationDate")] Product _product)
         {
             try
             {
-
                 if (ModelState.IsValid)
                 {
                     _context.Add(_product);
@@ -58,25 +56,25 @@ namespace WebApplicationCRUD_USERS.Controllers
         }
 
         // GET: ProductsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            return View(await _context.Products.FirstOrDefaultAsync(product => product.Id == id));
         }
 
         // POST: ProductsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Edit([Bind("Name,Description,Price,Amount,ExpirationDate")] Product _product)
+        //{
+        //    try
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
 
         // GET: ProductsController/Delete/5

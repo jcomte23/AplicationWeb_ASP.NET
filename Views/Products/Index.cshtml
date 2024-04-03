@@ -41,7 +41,7 @@
                     <td class="text-center">
                         <div class="btn-group gap-2">
                             <a class="btn btn-info text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">details</a>
-                            <a class="btn btn-warning text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Edit">edit</a>
+                            <a class="btn btn-warning text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">edit</a>
                             <a class="btn btn-danger text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id">delete</a>
                         </div>
                     </td>
