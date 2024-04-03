@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 using WebApplicationCRUD_USERS.Data;
+using WebApplicationCRUD_USERS.Models;
 
 namespace WebApplicationCRUD_USERS.Controllers
 {
@@ -34,16 +36,25 @@ namespace WebApplicationCRUD_USERS.Controllers
         // POST: ProductsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+
+        public async Task<IActionResult> Create([Bind("Name,Description,Price,Amount,ExpirationDate")] Product _product)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+
+                if (ModelState.IsValid)
+                {
+                    _context.Add(_product);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                return View(_product);
             }
             catch
             {
                 return View();
             }
+
         }
 
         // GET: ProductsController/Edit/5
@@ -67,8 +78,9 @@ namespace WebApplicationCRUD_USERS.Controllers
             }
         }
 
+
         // GET: ProductsController/Delete/5
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Products == null)
             {
@@ -78,11 +90,12 @@ namespace WebApplicationCRUD_USERS.Controllers
             var product = await _context.Products.FirstOrDefaultAsync(product => product.Id == id);
             if (product == null)
             {
+                Debug.WriteLine("ese producto no se encontro en la base de datos");
                 return NotFound();
             }
 
-            //return View(usuario);
-            return View();
+            return View(product);
+
         }
 
 
@@ -91,7 +104,7 @@ namespace WebApplicationCRUD_USERS.Controllers
         // POST: ProductsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {

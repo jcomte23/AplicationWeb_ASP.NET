@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Products";
+}
+
+<section class="d-flex justify-content-between align-items-center">
+    <h1>confirm request</h1>
+    <a class="btn btn-primary text-capitalize" role="button" asp-area="" asp-controller="Products" asp-action="Index">back</a>
+</section>
+
+<section class="text-center py-5 container">
+    <h2>The product <span class="text-capitalize">"@Model.Name"</span> will be deleted from the database, are you sure?</h2>
+    <br />
+    <form asp-action="Delete" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+
+        <button type="submit" class="btn btn-success text-capitalize rounded">Confirm</button>
+        <a class="btn btn-danger text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Index">Cancel</a>
+    </form>
+
+    
+</section>

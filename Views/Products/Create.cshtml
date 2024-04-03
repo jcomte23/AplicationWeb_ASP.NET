@@ -1,0 +1,41 @@
+﻿﻿@{
+    ViewData["Title"] = "Libro";
+}
+
+@section Scripts {
+    <script src="~/js/SettingsCalendarProducts.js" asp-append-version="true"></script>
+}
+
+<section class="vh-100">
+    <article class="d-flex justify-content-between align-items-center">
+        <h1>Register product</h1>
+        <a class="btn btn-primary text-capitalize" role="button" asp-area="" asp-controller="Products" asp-action="Index">volver</a>
+    </article>
+    <form class="row g-3 text-capitalize" asp-action="Create" method="post">
+        <div class="col-md-12">
+            <label for="Name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="Name" name="Name">
+        </div>
+        <div class="col-md-12">
+            <label for="Description" class="form-label">Description</label>
+            <textarea class="form-control" id="Description" rows="5" name="Description"></textarea>
+        </div>
+        <div class="col-md-4">
+            <label for="Price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="Price" name="Price">
+        </div>
+        <div class="col-md-4">
+            <label for="Amount" class="form-label">Amount</label>
+            <input type="number" class="form-control" id="Amount" min="1" name="Amount">
+        </div>
+        <div class="col-md-4">
+            <label for="ExpirationDate" class="form-label">Expiration Date</label>
+            <input type="date" class="form-control" id="ExpirationDate" name="ExpirationDate" >
+        </div>
+        
+        <div class="d-flex justify-content-center gap-2">
+            <button type="submit" class="btn btn-success text-capitalize">guardar</button>
+            <button type="reset" class="btn btn-danger text-capitalize">cancelar</button>
+        </div>
+    </form>
+</section>
