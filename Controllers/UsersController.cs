@@ -21,9 +21,9 @@ namespace WebApplicationCRUD_USERS.Controllers
 
 
         // GET: UsersController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            return View(await _context.Users.FirstOrDefaultAsync(users => users.Id == id));
         }
 
         // GET: UsersController/Create

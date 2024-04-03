@@ -19,6 +19,7 @@
         <caption>User List</caption>
         <thead>
             <tr>
+                <th scope="col">ID</th>
                 <th scope="col">names</th>
                 <th scope="col">last name</th>
                 <th scope="col">email</th>
@@ -26,18 +27,22 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <th scope="row">javier </th>
-                <td>cómbita téllez</td>
-                <td>jcomte23@outlook.com</td>
-                <td class="text-center">
-                    <div class="btn-group gap-2">
-                        <a class="btn btn-info text-capitalize rounded" role="button" asp-area="" asp-controller="Usuario" asp-action="Details">details</a>
-                        <a class="btn btn-warning text-capitalize rounded" role="button" asp-area="" asp-controller="Usuario" asp-action="Edit">edit</a>
-                        <a class="btn btn-danger text-capitalize rounded" role="button" asp-area="" asp-controller="Usuario" asp-action="Delete">delete</a>
-                    </div>
-                </td>
-            </tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <th scope="row">@user.Id </th>
+                    <td>@user.Names</td>
+                    <td>@user.LastName</td>
+                    <td>@user.Email</td>
+                    <td class="text-center">
+                        <div class="btn-group gap-2">
+                            <a class="btn btn-info text-capitalize rounded" role="button" asp-area="" asp-controller="Users" asp-action="Details" asp-route-id="@user.Id">details</a>
+                            <a class="btn btn-warning text-capitalize rounded" role="button" asp-area="" asp-controller="Usuario" asp-action="Edit">edit</a>
+                            <a class="btn btn-danger text-capitalize rounded" role="button" asp-area="" asp-controller="Usuario" asp-action="Delete">delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </section>
