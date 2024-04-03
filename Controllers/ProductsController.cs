@@ -1,20 +1,28 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using WebApplicationCRUD_USERS.Data;
 
 namespace WebApplicationCRUD_USERS.Controllers
 {
     public class ProductsController : Controller
     {
-        // GET: ProductsController
-        public ActionResult Index()
+        public readonly DbCleverContext _context;
+        public ProductsController(DbCleverContext context)
         {
-            return View();
+            _context = context;
+        }
+
+        // GET: ProductsController
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Products.ToListAsync());
         }
 
         // GET: ProductsController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
+            return View(await _context.Users.FirstOrDefaultAsync(product => product.Id == id));
         }
 
         // GET: ProductsController/Create

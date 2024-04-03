@@ -23,11 +23,30 @@
                 <th scope="col">name</th>
                 <th scope="col">description</th>
                 <th scope="col">price</th>
-                <th scope="col">Experation date</th>
+                <th scope="col">amount</th>
+                <th scope="col">experation date</th>
                 <th scope="col" class="text-center">options</th>
             </tr>
         </thead>
         <tbody>
+            @foreach (var product in Model)
+            {
+                <tr>
+                    <th scope="row">@product.Id </th>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                    <td>@product.Amount</td>
+                    <td>@product.ExpirationDate</td>
+                    <td class="text-center">
+                        <div class="btn-group gap-2">
+                            <a class="btn btn-info text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">details</a>
+                            <a class="btn btn-warning text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Edit">edit</a>
+                            <a class="btn btn-danger text-capitalize rounded" role="button" asp-area="" asp-controller="Products" asp-action="Delete">delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 </section>
