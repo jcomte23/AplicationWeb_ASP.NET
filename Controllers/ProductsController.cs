@@ -13,6 +13,9 @@ namespace WebApplicationCRUD_USERS.Controllers
         public ProductsController(DbCleverContext context)
         {
             _context = context;
+            Debug.Write($"");
+            Debug.Write($"hola mundo + " + context);
+            Debug.Write($"");
         }
 
         // GET: ProductsController
@@ -62,19 +65,24 @@ namespace WebApplicationCRUD_USERS.Controllers
         }
 
         // POST: ProductsController/Edit/5
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit([Bind("Name,Description,Price,Amount,ExpirationDate")] Product _product)
-        //{
-        //    try
-        //    {
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,Price,Amount,ExpirationDate")] Product product)
+        {
+
+
+            if (ModelState.IsValid)
+            {
+
+                _context.Update(product);
+                await _context.SaveChangesAsync();
+
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(product);
+        }
 
 
         // GET: ProductsController/Delete/5
