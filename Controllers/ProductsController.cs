@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebApplicationCRUD_USERS.Data;
 using WebApplicationCRUD_USERS.Models;
+using static Microsoft.Extensions.Logging.EventSource.LoggingEventSource;
 
 namespace WebApplicationCRUD_USERS.Controllers
 {
@@ -13,15 +14,28 @@ namespace WebApplicationCRUD_USERS.Controllers
         public ProductsController(DbCleverContext context)
         {
             _context = context;
-            Debug.Write($"");
-            Debug.Write($"hola mundo + " + context);
-            Debug.Write($"");
         }
 
         // GET: ProductsController
         public async Task<IActionResult> Index()
         {
             return View(await _context.Products.ToListAsync());
+        }
+
+        // GET: ProductsController
+        public async Task<IActionResult> FindProduct(string keyword)
+        {
+            IQueryable<Product> products = _context.Products;
+
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                products = products.Where(p => p.Name.Contains(keyword));
+            }
+
+            var productList = await products.ToListAsync();
+
+            return View("Index", productList);
+
         }
 
         // GET: ProductsController/Details/5
@@ -67,17 +81,12 @@ namespace WebApplicationCRUD_USERS.Controllers
         // POST: ProductsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Name,Description,Price,Amount,ExpirationDate")] Product product)
+        public async Task<IActionResult> Edit(int id, Product product)
         {
-
-
             if (ModelState.IsValid)
             {
-
                 _context.Update(product);
                 await _context.SaveChangesAsync();
-
-
                 return RedirectToAction(nameof(Index));
             }
 
@@ -103,8 +112,6 @@ namespace WebApplicationCRUD_USERS.Controllers
             return View(product);
 
         }
-
-
 
 
         // POST: ProductsController/Delete/5

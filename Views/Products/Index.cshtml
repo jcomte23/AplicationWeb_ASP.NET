@@ -4,8 +4,8 @@
 
 <section>
     <article class="d-flex justify-content-between">
-        <form class="d-flex " role="search">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <form asp-action="FindProduct" method="get" class="d-flex " role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" name="keyword" aria-label="Search">
             <button class="btn btn-outline-success d-flex" type="submit"><i class="bi bi-search me-2"></i>Search</button>
         </form>
         <div>
